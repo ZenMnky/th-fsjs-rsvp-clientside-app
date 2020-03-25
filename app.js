@@ -6,18 +6,10 @@ const inviteeForm = document.querySelector('#registrar');
 const newGuestInput = document.querySelector('.registarar__input__name');
 const guestList = document.querySelector('#invitedList');
 
-
 /**
- * add guest to the guest list
+ * Build guest entry function(s)
  */
-inviteeForm.addEventListener('submit', (e) => {
-    //prevent form from refresing when submitted
-    e.preventDefault();
-    
-    //capture name of new guest, then reset input field
-    const newGuest = newGuestInput.value;
-    newGuestInput.value = '';
-    
+function buildGuestListEntry(newGuest) {
     //Build a new guest list entry
     const guestListEntry = document.createElement('li');
     guestListEntry.textContent = newGuest;
@@ -36,7 +28,25 @@ inviteeForm.addEventListener('submit', (e) => {
     removeGuestButton.textContent = 'Remove Guest';
     removeGuestButton.className = 'guestListEntry__removeGuestButton';
     guestListEntry.appendChild(removeGuestButton);
+
+    return guestListEntry;
+}
+
+/**
+ * add guest to the guest list
+ */
+inviteeForm.addEventListener('submit', (e) => {
+    //prevent form from refresing when submitted
+    e.preventDefault();
+    
+    //capture name of new guest, then reset input field
+    const newGuest = newGuestInput.value;
+    newGuestInput.value = '';
+    
+    //build new guest list entry
+    const guestListEntry = buildGuestListEntry(newGuest);
    
+    //add to the existing guest list :)
     guestList.appendChild(guestListEntry);
 });
 

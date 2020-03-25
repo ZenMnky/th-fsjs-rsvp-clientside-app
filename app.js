@@ -4,7 +4,36 @@
 
 const inviteeForm = document.querySelector('#registrar');
 const newGuestInput = document.querySelector('.registarar__input__name');
+const mainDiv = document.querySelector('div.main');
 const guestList = document.querySelector('#invitedList');
+
+/**
+ * Create a section for the guest list filter
+ */
+
+const div = document.createElement('div');
+const filterCheckBox = document.createElement('input');
+filterCheckBox.type = 'Checkbox';
+const filterLabel = document.createElement('label');
+filterLabel.textContent = `Hide those who haven't reponded`;
+
+div.appendChild(filterCheckBox);
+div.appendChild(filterLabel);
+mainDiv.insertBefore(div, guestList );
+
+/**
+ * Add functionality to the guest list filter checkbox
+ */
+// TAKING A BREAK - RETURN HERE !!! :D
+filterCheckBox.addEventListener('change', (e)=>{
+    const isChecked = e.target.checked;
+    console.log(isChecked);
+    if (isChecked){
+        //hide unconfirmed guests
+    } else {
+        //show all guests, including unconfirmed guests
+    }
+});
 
 /**
  * Build guest entry function(s)
@@ -59,7 +88,7 @@ inviteeForm.addEventListener('submit', (e) => {
 });
 
 /**
- * Change the style of confirmLabel when the checkbox is clicked (changed)
+ * Change the style of the guest list entry when status is confirmed
  */
 guestList.addEventListener('change', (e) =>{
     const checkBox = e.target;

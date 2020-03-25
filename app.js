@@ -12,7 +12,9 @@ const guestList = document.querySelector('#invitedList');
 function buildGuestListEntry(newGuest) {
     //Build a new guest list entry
     const guestListEntry = document.createElement('li');
-    guestListEntry.textContent = newGuest;
+    const span = document.createElement('span');
+    span.textContent = newGuest;
+    guestListEntry.appendChild(span);
     
     ////Add a 'Confirmed' label with corresponding checkbox
     const confirmLabel = document.createElement('label');
@@ -22,6 +24,12 @@ function buildGuestListEntry(newGuest) {
     confirmCheckbox.type = 'Checkbox';
     confirmLabel.appendChild(confirmCheckbox);
     guestListEntry.appendChild(confirmLabel);
+
+    ////Option to edit guest list entry
+    const editGuestButton = document.createElement('button');
+    editGuestButton.textContent = 'Edit';
+    editGuestButton.className = 'guestListEntry__editGuestButton';
+    guestListEntry.appendChild(editGuestButton);
     
     ////Option to remove guest from guest list with the click of a button
     const removeGuestButton = document.createElement('button');
@@ -65,13 +73,35 @@ guestList.addEventListener('change', (e) =>{
     }
 });
 
-/**
- * Remove guest from the list when the button is clicked
- */
 guestList.addEventListener('click', (e) =>{
-    if (e.target.className === 'guestListEntry__removeGuestButton'){
+    const button = e.target;
+    const li = e.target.parentNode;
+
+    //remove guest
+    if (button.className === 'guestListEntry__removeGuestButton'){
         const li = e.target.parentNode;
         const ul = li.parentNode;
         ul.removeChild(li);
+    } 
+    //edit guest 
+    else if (button.className === 'guestListEntry__editGuestButton') {
+        const span = li.firstElementChild;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = span.textContent;
+        li.insertBefore(input, span);
+        li.removeChild(span);
+        button.textContent = 'Save';
+        button.className = 'guestListEntry__editGuestButton--save';
+    }
+    //save updated guest name
+    else if (button.className === 'guestListEntry__editGuestButton--save'){
+        const input = li.firstElementChild;
+        const span = document.createElement('span');
+        span.textContent = input.value;
+        li.insertBefore(span, input);
+        li.removeChild(input);
+        button.textContent = 'Edit';
+        button.className = 'guestListEntry__editGuestButton';
     }
 });

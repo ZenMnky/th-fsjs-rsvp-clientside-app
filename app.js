@@ -26,7 +26,6 @@ inviteeForm.addEventListener('submit', (e) => {
     const confirmLabel = document.createElement('label');
     confirmLabel.textContent = 'Confirmed';
     
-    
     const confirmCheckbox = document.createElement('input');
     confirmCheckbox.type = 'Checkbox';
     confirmLabel.appendChild(confirmCheckbox);
@@ -35,10 +34,8 @@ inviteeForm.addEventListener('submit', (e) => {
     ////Option to remove guest from guest list with the click of a button
     const removeGuestButton = document.createElement('button');
     removeGuestButton.textContent = 'Remove Guest';
+    removeGuestButton.className = 'guestListEntry__removeGuestButton';
     guestListEntry.appendChild(removeGuestButton);
-    /**
-     * Taking a break. Still need to add functionality to the removeGuestButton.
-     */
    
     guestList.appendChild(guestListEntry);
 });
@@ -56,5 +53,15 @@ guestList.addEventListener('change', (e) =>{
     } else {
         guestListEntry.className = '';
     }
+});
 
+/**
+ * Remove guest from the list when the button is clicked
+ */
+guestList.addEventListener('click', (e) =>{
+    if (e.target.className === 'guestListEntry__removeGuestButton'){
+        const li = e.target.parentNode;
+        const ul = li.parentNode;
+        ul.removeChild(li);
+    }
 });

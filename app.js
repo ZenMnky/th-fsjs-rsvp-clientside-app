@@ -126,33 +126,41 @@ document.addEventListener('DOMContentLoaded', () => {
     guestList.addEventListener('click', (e) =>{
         const button = e.target;
         const li = e.target.parentNode;
+        const ul = li.parentNode;
+        const action = button.className;
 
-        //remove guest
-        if (button.className === 'guestListEntry__removeGuestButton'){
-            const li = e.target.parentNode;
-            const ul = li.parentNode;
-            ul.removeChild(li);
-        } 
-        //edit guest 
-        else if (button.className === 'guestListEntry__editGuestButton') {
-            const span = li.firstElementChild;
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = span.textContent;
-            li.insertBefore(input, span);
-            li.removeChild(span);
-            button.textContent = 'Save';
-            button.className = 'guestListEntry__editGuestButton--save';
-        }
-        //save updated guest name
-        else if (button.className === 'guestListEntry__editGuestButton--save'){
-            const input = li.firstElementChild;
-            const span = document.createElement('span');
-            span.textContent = input.value;
-            li.insertBefore(span, input);
-            li.removeChild(input);
-            button.textContent = 'Edit';
-            button.className = 'guestListEntry__editGuestButton';
+        const nameActions = {
+            remove: () => {
+                ul.removeChild(li);
+            },
+            edit: () => {
+                const span = li.firstElementChild;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = span.textContent;
+                li.insertBefore(input, span);
+                li.removeChild(span);
+                button.textContent = 'Save';
+                button.className = 'guestListEntry__editGuestButton--save';
+            },
+            save: () => {
+                const input = li.firstElementChild;
+                const span = document.createElement('span');
+                span.textContent = input.value;
+                li.insertBefore(span, input);
+                li.removeChild(input);
+                button.textContent = 'Edit';
+                button.className = 'guestListEntry__editGuestButton';
+            }
+        };   
+
+        //Select and run conditional button action
+        if (action === 'guestListEntry__removeGuestButton'){  
+            nameActions.remove();
+        } else if (action === 'guestListEntry__editGuestButton') {
+            nameActions.edit();
+        } else if (action === 'guestListEntry__editGuestButton--save'){
+            nameActions.save();
         }
     });
 });

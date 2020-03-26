@@ -22,16 +22,27 @@ div.appendChild(filterLabel);
 mainDiv.insertBefore(div, guestList );
 
 /**
- * Add functionality to the guest list filter checkbox
+ * When selected, filter unconfirmed guests
  */
-// TAKING A BREAK - RETURN HERE !!! :D
 filterCheckBox.addEventListener('change', (e)=>{
     const isChecked = e.target.checked;
-    console.log(isChecked);
+    const lis = guestList.children;
     if (isChecked){
         //hide unconfirmed guests
+        for (let i = 0; i < lis.length; i += 1){
+            let li = lis[i];
+            if (li.className === 'responded') {
+                li.style.display = '';
+            } else {
+                li.style.display = 'none';
+            }
+        }
     } else {
         //show all guests, including unconfirmed guests
+        for (let i = 0; i < lis.length; i += 1){
+            let li = lis[i];
+            li.style.display = '';
+        }
     }
 });
 

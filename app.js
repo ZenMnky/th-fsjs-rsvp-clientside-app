@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /**
-     * Build Guest-Entry function(s)
+     * Build Guest-Entry functions
      */
     function buildGuestListEntry(newGuest) {
         
@@ -70,28 +70,23 @@ document.addEventListener('DOMContentLoaded', () => {
         function appendToGuestList(elementName, propertyName, propertyValue, assignClass){
             const element = createElement(elementName, propertyName, propertyValue, assignClass);
             guestListEntry.appendChild(element);
+            return element;
         }
         
         //Build a new guest list entry
         const guestListEntry = document.createElement('li');
-        const span = appendToGuestList('span', 'textContent', newGuest, '');
-        
+        appendToGuestList('span', 'textContent', newGuest, '');
         
         ////Add a 'Confirmed' label with corresponding checkbox
-        const confirmLabel = createElement('label', 'textContent', 'Confirmed', '');
-                        
-        const confirmCheckbox = createElement('input', 'type', 'Checkbox', '');
-        confirmLabel.appendChild(confirmCheckbox);
-        guestListEntry.appendChild(confirmLabel);
-        
+        appendToGuestList('label', 'textContent', 'Confirmed', '')
+            .appendChild(createElement('input', 'type', 'Checkbox', ''));
 
         ////Option to edit guest list entry
-        const editGuestButton = appendToGuestList('button', 'textContent', 'Edit', 'guestListEntry__editGuestButton');
+        appendToGuestList('button', 'textContent', 'Edit', 'guestListEntry__editGuestButton');
                 
         ////Option to remove guest from guest list with the click of a button
-        const removeGuestButton = appendToGuestList('button', 'textContent', 'Remove Guest', 'guestListEntry__removeGuestButton');
+        appendToGuestList('button', 'textContent', 'Remove Guest', 'guestListEntry__removeGuestButton');
         
-
         return guestListEntry;
     }
 
